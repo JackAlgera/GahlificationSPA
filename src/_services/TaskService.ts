@@ -16,9 +16,9 @@ class TaskService {
   };
 
   public createTask = (
+    task: TaskType,
     responseCallback: (response: TaskType) => void,
     errorCallback: () => void,
-    task: TaskType
   ) => {
     axios
       .request({

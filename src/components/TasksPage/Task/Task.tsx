@@ -3,7 +3,6 @@ import { TagType, TaskStepType, TaskType } from "../../../_models/application_mo
 import { Box, Chip, createTheme, Divider, Stack, ThemeProvider, Typography } from "@mui/material";
 import timeService from '../../../_utils/TimeService';
 import DoneButton from "../../icons/DoneButton";
-import AddButton from "../../icons/AddIcon/AddButton";
 import AddStepModal from "../AddStepModal/AddStepModal";
 import TaskService from "../../../_services/TaskService";
 
@@ -74,7 +73,9 @@ const Task = (props: TaskProps) => {
           <Box sx={{ marginLeft: 2 }}>
             <AddStepModal handleAddTaskStep={(taskStepDescription: string) => TaskService.createTaskStep(
               { taskStepId: '', description: taskStepDescription, taskId: task.taskId },
-              (taskStep: TaskStepType) => { setTask({ ...task, taskSteps: [...task.taskSteps, taskStep] }) },
+              (taskStep: TaskStepType) => {
+                setTask({ ...task, taskSteps: [...task.taskSteps, taskStep] })
+              },
               () => {}
             )}/>
           </Box>

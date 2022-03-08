@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import authService from "./AuthService";
-import { TagType, TaskType } from "../_models/application_models";
+import { ETagTypeType, TagType, TaskStepType, TaskType } from "../_models/application_models";
 
 const axios = require('axios').default;
 
@@ -19,6 +19,22 @@ class TagService {
         errorCallback();
       });
   };
+
+  public createMultipleTags = (
+    tags: TagType[],
+    responseCallback: (response: TagType[]) => void,
+    errorCallback: () => void
+  ) => {
+    axios
+      .request({
+        method: "post",
+        url: `tags`,
+        data: tags,
+        headers: authService.getAuthHeader()
+      })
+      .then((response: AxiosResponse) => responseCallback(response.data))
+      .catch((error: AxiosError) => errorCallback());
+  }
 }
 
 export default new TagService();

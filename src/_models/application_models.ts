@@ -11,8 +11,8 @@ export interface TaskType {
 }
 
 export interface TagType {
-  tagId: string;
-  taskId: string;
+  tagId?: string;
+  itemId: string;
   tagName: string;
   tagType: string;
 }
@@ -30,4 +30,8 @@ export enum ETagValue {
   URGENT = "Urgent",
   GAHLOU = "Gahlou",
   FLOKKIE = "Flokkie"
+}
+
+export enum ETagTypeType {
+  TASK = "TASK"
 }

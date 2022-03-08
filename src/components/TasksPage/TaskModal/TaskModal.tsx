@@ -1,11 +1,11 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import AddButton from "../../icons/AddIcon/AddButton";
 import { Box, Modal, TextField, Typography } from "@mui/material";
 import { TaskType } from "../../../_models/application_models";
 import TagValuesSelect from "../../selects/TagValuesSelect/TagValuesSelect";
 
 interface TaskModalProps {
-  handleAddTask: (task: TaskType) => void;
+  handleAddTask: (task: TaskType, tagNames: string[]) => void;
 }
 
 const style = {
@@ -33,7 +33,8 @@ const TaskModal = (props: TaskModalProps) => {
     taskSteps: []
   }
 
-  const [task, setTask] = useState(initialState);
+  const [ tagNames, setTagNames ] = useState<string[]>([]);
+  const [ task, setTask ] = useState(initialState);
 
   const setTaskName = ( event: ChangeEvent<HTMLInputElement> ) => {
     setTask( {
@@ -67,7 +68,10 @@ const TaskModal = (props: TaskModalProps) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const resetTask = () => setTask(initialState);
+  const resetTask = () => {
+    setTask(initialState);
+    setTagNames([]);
+  }
 
   return (
     <div>
@@ -83,7 +87,7 @@ const TaskModal = (props: TaskModalProps) => {
             <TextField required label="Description" id="description" value={task.description} onChange={(event: ChangeEvent<HTMLInputElement>) => setDescription(event)} margin="dense"/>
             <TextField required label="Do task at date" id="doTaskAtDate" value={task.doTaskAtDate} onChange={(event: ChangeEvent<HTMLInputElement>) => setDoTaskAtDate(event)} margin="dense"/>
             <TextField required label="Repeat delay in hours" id="repeatDelay" value={task.repeatDelay / 3600} onChange={(event: ChangeEvent<HTMLInputElement>) => setRepeatDelay(event)} margin="dense" inputMode="decimal"/>
-            <TagValuesSelect/>
+            <TagValuesSelect tagNames={tagNames} setTagNames={setTagNames}/>
             {/*<DatePicker*/}
             {/*  label="Basic example"*/}
             {/*  value={value}*/}
@@ -95,7 +99,7 @@ const TaskModal = (props: TaskModalProps) => {
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
               <AddButton onClick={() => {
                 handleClose();
-                props.handleAddTask(task);
+                props.handleAddTask(task, tagNames);
                 resetTask();
               }}/>
             </Box>
