@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
 import TasksPage from "./TasksPage/TasksPage";
+import { Box } from "@mui/material";
 
 function App() {
   return (
-    <div className="App">
+    <Box sx={{}}>
       <TasksPage/>
-    </div>
+    </Box>
   );
 }
 

@@ -1,10 +1,12 @@
-import React from 'react';
-import { TaskType } from "../../../models/task_type";
-import { Box, createTheme, Divider, ThemeProvider, Typography } from "@mui/material";
+import React, { useState } from 'react';
+import { TagType, TaskStepType, TaskType } from "../../../_models/application_models";
+import { Box, Chip, createTheme, Divider, Stack, ThemeProvider, Typography } from "@mui/material";
 import timeService from '../../../_utils/TimeService';
+import DoneButton from "../../icons/DoneButton";
 
 interface TaskProps {
-  task: TaskType
+  task: TaskType,
+  onDone: (taskId: string) => void
 }
 
 const theme = createTheme({
@@ -23,31 +25,63 @@ const theme = createTheme({
 });
 
 const Task = (props: TaskProps) => {
+
+  const [ task, setTask ] = useState(props.task);
+
+  const handleError = () => {
+    console.log( "error" )
+  }
+
+  const getTagColor = (tagName: string) => {
+    switch (tagName) {
+      case 'Admin':
+        return '#F7E1D7';
+      case 'Urgent':
+        return '#A33B20';
+      case 'Gahlou':
+        return '#1B2F33';
+      case 'Flokkie':
+        return '#00BFB2';
+    }
+
+    return '#4A5759';
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{
-        width: 300,
-        bgcolor: 'background.paper',
-        borderRadius: 2,
-        boxShadow: 2,
-        margin: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', padding: 1 }}>
-          <Box sx={{ width: 80, display: 'flex', flexDirection: 'column' }}>
-            <Typography>{ timeService.getDisplayTime(props.task.doTaskAtDate) }</Typography>
-            <Typography>{ timeService.getDisplayDate(props.task.doTaskAtDate) }</Typography>
-          </Box>
-          <Divider orientation="vertical" variant="middle" flexItem/>
+      <Box sx={{ bgcolor: 'background.paper', borderRadius: 3, boxShadow: 3, margin: 1, padding: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: 2}}>
-            <Box sx={{ fontSize: 'h6.fontSize' }}>{ props.task.taskName }</Box>
-            <Box sx={{ fontSize: 'body2.fontSize' }}>{ props.task.description }</Box>
+            <Box sx={{ fontSize: 'h6.fontSize' }}>{ task.taskName }</Box>
+            <Box sx={{ fontSize: 'body2.fontSize' }}>
+              <Box sx={{ width: 80, display: 'flex', flexDirection: 'row', marginLeft: 1, marginRight: 1 }}>
+                <Typography sx={{ paddingRight: 1 }}>{ timeService.getDisplayTime(task.doTaskAtDate) }</Typography>
+                <Typography>{ timeService.getDisplayDate(task.doTaskAtDate) }</Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Divider orientation="vertical" variant="middle" flexItem/>
+
+          <Box sx={{ fontSize: 'body2.fontSize' }}>{ task.description }</Box>
+
+          <Box sx={{ marginLeft: 2 }}>
+            <DoneButton onClick={() => props.onDone(task.taskId)}/>
           </Box>
         </Box>
 
         <Divider variant="middle" />
 
-        <Box sx={{ padding: 2 }}>
-          { props.task.repeatDelay }
-        </Box>
+        <Stack direction="row" spacing={1} m={1}>
+          { task.tags && task.tags.map((tag: TagType) => (
+            <Chip label={tag.tagName} color="primary" size="small" style={{ backgroundColor: `${getTagColor(tag.tagName)}` }} key={tag.tagId}/>
+          ))}
+        </Stack>
+        <Stack direction="column">
+          { task.taskSteps && task.taskSteps.map((taskStep: TaskStepType) => (
+            <Typography key={taskStep.taskStepId}>{taskStep.description}</Typography>
+          ))}
+        </Stack>
 
       </Box>
     </ThemeProvider>

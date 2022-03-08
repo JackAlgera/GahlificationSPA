@@ -1,4 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
+import jwtDecode from "jwt-decode";
 
 const axios = require('axios').default;
 
@@ -25,6 +26,11 @@ class AuthService {
     const token = localStorage.getItem('token');
 
     if (!token) {
+      return this.login();
+    }
+
+    const decodedToken : any = jwtDecode(token);
+    if (decodedToken.exp * 1000 < Date.now()) {
       return this.login();
     }
 

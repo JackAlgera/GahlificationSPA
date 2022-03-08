@@ -8,8 +8,9 @@ class TimeService {
 
   public getDisplayDate(dateStr: string) {
     const date = new Date(dateStr);
+    const currentMonth = date.getMonth() + 1;
 
-    return `${date.getMonth() < 9 ? '0' + date.getMonth() : date.getMonth()}/${date.getDate() < 9 ? '0' + date.getDate() : date.getDate()}`;
+    return `${currentMonth <= 9 ? '0' + currentMonth : currentMonth}/${date.getDate() <= 9 ? '0' + date.getDate() : date.getDate()}`;
   }
 }
 
