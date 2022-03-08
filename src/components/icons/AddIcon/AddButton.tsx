@@ -8,7 +8,7 @@ interface AddIconProps {
 
 const AddButton = (props: AddIconProps) => {
   return (
-    <Fab size="medium" color="primary" aria-label="add" onClick={props.onClick}>
+    <Fab size="small" color="primary" aria-label="add" onClick={props.onClick}>
       <SvgIcon>
         <AddRoundedIcon/>
       </SvgIcon>

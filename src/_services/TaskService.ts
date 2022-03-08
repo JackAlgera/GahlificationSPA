@@ -46,6 +46,22 @@ class TaskService {
       .catch((error: AxiosError) => errorCallback());
   }
 
+  public createTaskStep = (
+    taskStep: TaskStepType,
+    responseCallback: (response: TaskStepType) => void,
+    errorCallback: () => void
+  ) => {
+    axios
+      .request({
+        method: "post",
+        url: `tasks/${taskStep.taskId}/steps`,
+        data: taskStep,
+        headers: authService.getAuthHeader()
+      })
+      .then((response: AxiosResponse) => responseCallback(response.data))
+      .catch((error: AxiosError) => errorCallback());
+  }
+
   public getAllTaskStepsForTask = (
     taskId: string,
     responseCallback: (response: Array<TaskStepType>) => void,
