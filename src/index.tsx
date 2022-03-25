@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { Config } from "./_utils/Config";
 
 const axios = require('axios').default;
-const DEBUG = process.env.NODE_ENV === "development";
-
-const URL = 'http://localhost:8080/api'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,9 +14,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-axios.interceptors.request.use((config: any) => {
-  config.url = `${URL}/${config.url}`;
-  return config;
+axios.interceptors.request.use((request: any) => {
+  request.url = `${Config.api_url}/${request.url}`;
+  return request;
 }, (error: any) => {
   return Promise.reject(error);
 });

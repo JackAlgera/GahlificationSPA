@@ -1,15 +1,13 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import jwtDecode from "jwt-decode";
+import { Config } from "../_utils/Config";
 
 const axios = require('axios').default;
-
-const USERNAME = 'jack';
-const PASSWORD = 'somepassword';
 
 class AuthService {
   private login() : string {
     return axios
-      .post('authenticate', { username: USERNAME, password: PASSWORD })
+      .post('authenticate', { username: Config.database_username, password: Config.database_password })
       .then((response: AxiosResponse) => {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);

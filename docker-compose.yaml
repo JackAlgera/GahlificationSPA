@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+    gahlification_frontend:
+      container_name: gahlification_frontend
+  #    image: jackalgera/gahlification_backend:latest
+      build: .
+      ports:
+        - "3000:3000"
+      volumes:
+        - ./config-production.js:/usr/share/nginx/html/config.js
