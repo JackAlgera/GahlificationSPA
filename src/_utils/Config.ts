@@ -1,7 +1,5 @@
-const envSettings = window as any;
-
 export class Config {
-  static api_url = envSettings.API_URL;
-  static database_username = envSettings.DATABASE_USERNAME;
-  static database_password = envSettings.DATABASE_PASSWORD;
+  static api_url = process.env.REACT_APP_API_URL
+  static database_username = process.env.REACT_APP_TOKEN_USERNAME
+  static database_password = process.env.REACT_APP_TOKEN_PASSWORD
 }
