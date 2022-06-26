@@ -52,32 +52,30 @@ const Task = (props: TaskProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ bgcolor: 'background.paper', borderRadius: 3, boxShadow: 3, margin: 1, padding: 1 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: 2}}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginY: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: 2, width: '25%' }}>
+
             <Box sx={{ fontSize: 'h6.fontSize' }}>{ task.taskName }</Box>
-            <Box sx={{ fontSize: 'body2.fontSize' }}>
-              <Box sx={{ width: 80, display: 'flex', flexDirection: 'row', marginLeft: 1, marginRight: 1 }}>
-                <Typography sx={{ paddingRight: 1 }}>{ timeService.getDisplayTime(task.doTaskAtDate) }</Typography>
-                <Typography>{ timeService.getDisplayDate(task.doTaskAtDate) }</Typography>
-              </Box>
-            </Box>
+            {/*<Box sx={{ fontSize: 'body2.fontSize' }}>*/}
+            {/*  <Box sx={{ width: 80, display: 'flex', flexDirection: 'row', marginLeft: 1, marginRight: 1 }}>*/}
+            {/*    <Typography sx={{ paddingRight: 1 }}>{ timeService.getDisplayTime(task.doTaskAtDate) }</Typography>*/}
+            {/*    <Typography>{ timeService.getDisplayDate(task.doTaskAtDate) }</Typography>*/}
+            {/*  </Box>*/}
+            {/*</Box>*/}
           </Box>
 
-          <Divider orientation="vertical" variant="middle" flexItem/>
+          {/*<Divider orientation="vertical" variant="middle" flexItem/>*/}
 
-          <Box sx={{ fontSize: 'body2.fontSize' }}>{ task.description }</Box>
-
-          <Box sx={{ marginLeft: 2 }}>
-            <DoneButton onClick={() => props.onDone(task.taskId)}/>
-          </Box>
-          <Box sx={{ marginLeft: 2 }}>
-            <AddStepModal handleAddTaskStep={(taskStepDescription: string) => TaskService.createTaskStep(
-              { taskStepId: '', description: taskStepDescription, taskId: task.taskId },
-              (taskStep: TaskStepType) => {
-                setTask({ ...task, taskSteps: [...task.taskSteps, taskStep] })
-              },
-              () => {}
-            )}/>
+          <Box sx={{ fontSize: 'body2.fontSize', width: '50%' }}>{ task.description }</Box>
+          <Box sx={{ display: 'flex', gap: 1, marginX: 2 }}>
+              <DoneButton onClick={() => props.onDone(task.taskId)}/>
+              <AddStepModal handleAddTaskStep={(taskStepDescription: string) => TaskService.createTaskStep(
+                { taskStepId: '', description: taskStepDescription, taskId: task.taskId },
+                (taskStep: TaskStepType) => {
+                  setTask({ ...task, taskSteps: [...task.taskSteps, taskStep] })
+                },
+                () => {}
+              )}/>
           </Box>
         </Box>
 
